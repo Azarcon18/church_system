@@ -12,7 +12,7 @@
   }
 
   .navbar-nav .nav-item .nav-link {
-    color: white;   
+    color: white; 
   }
 
   .navbar-nav .nav-item .nav-link:hover, 
