@@ -3,9 +3,8 @@ $dev_data = array('id'=>'-1','firstname'=>'Developer','lastname'=>'','username'=
 if(!defined('base_url')) define('base_url','http://localhost/church_management/');
 if(!defined('base_app')) define('base_app', str_replace('\\','/',__DIR__).'/' );
 if(!defined('dev_data')) define('dev_data',$dev_data);
-if(!defined('dev_data')) define('dev_data',$dev_data);
-if(!defined('DB_SERVER')) define('DB_SERVER',"127.0.0.1");
-if(!defined('DB_USERNAME')) define('DB_USERNAME',"church_db");
-if(!defined('DB_PASSWORD')) define('DB_PASSWORD',"1Church_db");
+if(!defined('DB_SERVER')) define('DB_SERVER',"localhost");
+if(!defined('DB_USERNAME')) define('DB_USERNAME',"root");
+if(!defined('DB_PASSWORD')) define('DB_PASSWORD',"");
 if(!defined('DB_NAME')) define('DB_NAME',"church_db");
 ?>
