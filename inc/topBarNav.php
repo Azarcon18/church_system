@@ -22,7 +22,7 @@
   }
 
   .dropdown-menu {
-    background-color: white;
+    background-color: #6c757d; /* Secondary color (Bootstrap's secondary color) */
     display: none;
     opacity: 0;
     transform: translateY(-10px);
@@ -34,7 +34,7 @@
   }
 
   .dropdown-menu .dropdown-item:hover {
-    background-color: #66a8ef; 
+    background-color: #5a6268; /* Darker shade of secondary color */
     color: white;
   }
 
@@ -59,7 +59,7 @@
         <li class="nav-item"><a class="nav-link" aria-current="page" href="<?php echo base_url ?>?p=events">Events</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" aria-current="page" href="<?php echo base_url ?>?p=view_topics">Topics</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <div class="btn btn-dark dropdown-menu" aria-labelledby="navbarDropdown">
             <?php 
               $cat_qry = $conn->query("SELECT * FROM topics where status = 1 ");
               while($crow = $cat_qry->fetch_assoc()):

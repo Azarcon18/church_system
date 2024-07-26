@@ -42,7 +42,7 @@ $sub_title = "";
             <div class="col mb-6 mb-10 text-light item">
                 <a href="javascript:void(0)" class="card sched-item text-decoration-none btn btn-outline-primary" data-id="<?php echo $row['id'] ?>"  data-name="<?php echo $row['sched_type'] ?>">
                     <div class="card-body  btn btn-secondary">
-                        <div class="btn btn-secondary"style="text-align: center; margin-bottom: 10px;">
+                        <div class="btn btn-secondary"style="text-align: center; margin-bottom: 5px;">
                             
                             <!-- Product name-->
                             <h5 class="fw-bolder border-bottom border-primary"><?php echo $row['sched_type'] ?></h5>
