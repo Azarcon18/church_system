@@ -101,16 +101,12 @@
                 });
             });
 
-            // Validate the contact input
+            // Validate the contact input to start with "09"
             $('#contact').on('input', function() {
                 this.value = this.value.replace(/[^0-9]/g, '');
                 if (this.value.length > 11) {
                     this.value = this.value.slice(0, 11);
                 }
-            });
-
-            // Ensure the contact number starts with "09"
-            $('#contact').on('blur', function() {
                 if (!this.value.startsWith('09')) {
                     this.setCustomValidity('Contact number must start with 09');
                 } else {
