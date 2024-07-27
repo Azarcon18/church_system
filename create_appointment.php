@@ -70,7 +70,6 @@
                     return;
                 }
 
-                start_loader();
                 $.ajax({
                     url: _base_url_+"classes/Master.php?f=save_appointment_req",
                     data: new FormData(_this[0]),
@@ -81,12 +80,10 @@
                     dataType: 'json',
                     error: err => {
                         console.log(err);
-                        alert_toast("An error occurred", 'error');
-                        end_loader();
+                        alert("An error occurred");
                     },
                     success: function(resp){
                         if (typeof resp == 'object' && resp.status == 'success'){
-                            end_loader();
                             setTimeout(() => {
                                 uni_modal('', 'success_msg.php');
                             }, 200);
@@ -96,10 +93,8 @@
                             _this.prepend(el);
                             el.show('slow');
                             $("html, body").animate({ scrollTop: _this.closest('.card').offset().top }, "fast");
-                            end_loader();
                         } else {
-                            alert_toast("An error occurred", 'error');
-                            end_loader();
+                            alert("An error occurred");
                             console.log(resp);
                         }
                     }
