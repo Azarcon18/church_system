@@ -26,10 +26,6 @@
                             <label for="address" class="control-label"><i class="fas fa-map-marker-alt"></i> Address</label>
                             <textarea type="text" name="address" id="address" class="form-control rounded-0" required></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="facebook" class="control-label"><i class="fab fa-facebook"></i> Facebook Account</label>
-                            <input type="url" name="facebook" id="facebook" class="form-control rounded-0" pattern="https?://.+" title="Please enter a valid URL starting with http:// or https://">
-                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
