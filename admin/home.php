@@ -86,7 +86,7 @@
               <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-calendar-check"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Total Appointment</span>
+                <span class="info-box-text">Total Appointment Requests</span>
                 <span class="info-box-number text-right">
                 <?php 
                     $appointment = $conn->query("SELECT count(id) as total FROM appointment_request ")->fetch_assoc()['total'];
