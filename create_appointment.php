@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contact" class="control-label"><i class="fas fa-phone"></i> Contact</label>
-                            <input type="text" name="contact" id="contact" class="form-control rounded-0" required maxlength="11" pattern="\d{11}" title="Please enter exactly 11 digits">
+                            <input type="text" name="contact" id="contact" class="form-control rounded-0" required maxlength="11" pattern="09\d{9}" title="Please enter a valid contact number starting with 09" placeholder="09XXXXXXXXX">
                         </div>
                         <div class="form-group">
                             <label for="address" class="control-label"><i class="fas fa-map-marker-alt"></i> Address</label>
@@ -106,6 +106,15 @@
                 this.value = this.value.replace(/[^0-9]/g, '');
                 if (this.value.length > 11) {
                     this.value = this.value.slice(0, 11);
+                }
+            });
+
+            // Ensure the contact number starts with "09"
+            $('#contact').on('blur', function() {
+                if (!this.value.startsWith('09')) {
+                    this.setCustomValidity('Contact number must start with 09');
+                } else {
+                    this.setCustomValidity('');
                 }
             });
         });
