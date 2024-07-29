@@ -9,8 +9,8 @@
                 <span class="info-box-text">Registered Users</span>
                 <span class="info-box-number text-right">
                   <?php 
-                     $registered_users = $conn->query("SELECT count(*) as total FROM registered_users ")->fetch_assoc()['total'];
-                    echo number_format($registered_users);
+                     //$registered_users = $conn->query("SELECT count(*) as total FROM registered_users ")->fetch_assoc()['total'];
+                    //echo number_format($registered_users);
                   ?>
                   <?php ?>
                 </span>
