@@ -77,7 +77,7 @@ $currentDate = date('D M, Y');
 <div class="container">
 	
 <header style="text-align: center; margin-bottom: 20px;">
-        <img src="..C:\xampp\htdocs\church_management\uploads"style="display: flex; margin: auto; width: 50px; height: 50px; border-radius: 100%;">
+        <img src="..C:/xampp/htdocs/church_management/uploads/logo(1.jpg)"style="display: flex; margin: auto; width: 50px; height: 50px; border-radius: 100%;">
         <h3>Church Management System</h3>
         <p>Poblacion, Madridejos, Cebu Philippines</p>
         <p>Report Date: <span id="date"></span></p>
