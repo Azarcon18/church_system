@@ -56,12 +56,12 @@
   })
 </script>
 <footer class="main-footer text-sm">
-        <strong> <?php echo date('Y') ?>. 
+        <strong>Copyright © <?php echo date('Y') ?>. 
         <!-- <a href=""></a> -->
         </strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
-          <b><?php echo $_settings->info('short_name') ?> (by: <a href="mailto:johnricosullano19@gmail.com" target="blank">Azarcon</a> )</b> v2.0
+          <b><?php echo $_settings->info('short_name') ?> (by: <a href="mailto:johnricosullano19@gmail.com" target="blank">John Rico Sullano</a> )</b> v2.0
         </div>
       </footer>
     </div>

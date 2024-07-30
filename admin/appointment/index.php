@@ -7,6 +7,7 @@
 	<div class="card-header">
 		<h3 class="card-title">List of Appointment Request</h3>
 		<div class="card-tools">
+			<a href="?page=appointment/manage_appointment" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Create New</a>
 		</div>
 	</div>
 	<div class="card-body">

@@ -2,7 +2,10 @@
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
  <?php require_once('inc/header.php') ?>
-<body class="hold-transition login-page dark-mode">
+<body class="hold-transition login-page  dark-mode">
+  <script>
+    start_loader()
+  </script>
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
@@ -59,76 +62,11 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
   $(document).ready(function(){
-    $('#login-frm').submit(function(e){
-      e.preventDefault();
-      $.ajax({
-        url: _base_url_ + 'classes/Master.php?f=login',
-        method: 'POST',
-        data: $(this).serialize(),
-        dataType: 'json',
-        error: err => {
-          console.log(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'An error occurred. Please try again.',
-            showClass: {
-              popup: 'animate__animated animate__shakeX'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOut'
-            }
-          });
-        },
-        success: function(resp) {
-          if (typeof resp === 'object' && resp.status === 'success') {
-            Swal.fire({
-              icon: 'success',
-              title: 'Success',
-              text: 'Login successful!',
-              showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-              },
-              hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-              }
-            }).then(() => {
-              location.href = './';
-            });
-          } else if (resp.status === 'failed' && !!resp.msg) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Login Failed',
-              text: resp.msg,
-              showClass: {
-                popup: 'animate__animated animate__shakeX'
-              },
-              hideClass: {
-                popup: 'animate__animated animate__fadeOut'
-              }
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'An error occurred. Please try again.',
-              showClass: {
-                popup: 'animate__animated animate__shakeX'
-              },
-              hideClass: {
-                popup: 'animate__animated animate__fadeOut'
-              }
-            });
-          }
-        }
-      });
-    });
-  });
+    end_loader();
+  })
 </script>
 </body>
 </html>

@@ -29,7 +29,8 @@ $sub_title = "";
                 </div>
             </div>
         </div>
-        <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id='sched-type-list'>
+        <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id = 'sched-type-list'>
+           
             <?php 
                 $whereData = "";
                 $categories = $conn->query("SELECT * FROM `schedule_type` where `status` = 1 order by `sched_type` asc ");
@@ -39,11 +40,10 @@ $sub_title = "";
                     }
                     $row['description'] = strip_tags(stripslashes(html_entity_decode($row['description'])));
             ?>
-            <div class="col mb-6 mb-10 text-light item">
-                <a href="javascript:void(0)" class="card sched-item text-decoration-none btn btn-outline-primary" data-id="<?php echo $row['id'] ?>"  data-name="<?php echo $row['sched_type'] ?>">
-                    <div class="card-body  btn btn-secondary">
-                        <div class="btn btn-secondary"style="text-align: center; margin-bottom: 5px;">
-                            
+            <div class="col mb-6 mb-2 text-light item">
+                <a href="javascript:void(0)" class="card sched-item text-decoration-none bg-gradient" data-id="<?php echo $row['id'] ?>"  data-name="<?php echo $row['sched_type'] ?>">
+                    <div class="card-body p-4">
+                        <div class="">
                             <!-- Product name-->
                             <h5 class="fw-bolder border-bottom border-primary"><?php echo $row['sched_type'] ?></h5>
                         </div>
@@ -56,12 +56,6 @@ $sub_title = "";
         </div>
     </div>
 </section>
-<!-- Footer -->
-<footer class="bg-dark text-white py-4">
-    <div class="container text-center">
-        <p class="mb-0">&copy; <?php echo date("Y"); ?> Your Company Name. All rights reserved.</p>
-    </div>
-</footer>
 <script>
     $(function(){
         $('.sched-item').click(function(){

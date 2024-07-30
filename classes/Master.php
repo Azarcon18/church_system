@@ -21,6 +21,51 @@ Class Master extends DBConnection {
 			exit;
 		}
 	}
+
+	function login_user($email, $password) {
+        $stmt = $this->conn->prepare('SELECT * FROM registered_users WHERE email = ?');
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+    
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['photo'] = $user['photo'];
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+	function save_user() {
+		extract($_POST);
+	
+		// Hash the password before storing it
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+	
+		// Build the SQL statement
+		$sql = "INSERT INTO registered_users (name, user_name, email, password, phone_no, address, photo) 
+				VALUES ('$name', '$user_name', '$email', '$hashed_password', '$phone_no', '$address', 'defaultphoto.jpg')";
+	
+		// Execute the query
+		$save = $this->conn->query($sql);
+	
+		if ($this->capture_err()) {
+			return $this->capture_err();
+		}
+	
+		if ($save) {
+			$resp['status'] = 'success';
+			$this->settings->set_flashdata('success', "Account successfully created.");
+		} else {
+			$resp['status'] = 'failed';
+			$resp['err'] = $this->conn->error . "[{$sql}]";
+		}
+		return json_encode($resp);
+	}
+	
+
+
 	function save_topic(){
 		extract($_POST);
 		$data = "";
