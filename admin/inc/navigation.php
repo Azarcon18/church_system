@@ -120,6 +120,13 @@
                   <p>Appointment Requests</p>
                 </a>
               </li>
+             </li>
+             <li class="nav-item dropdown">
+             <a href="<?php echo base_url ?>admin/?page=registered_users" class="nav-link nav-registered_users">
+             <i class="nav-icon fas fa-user-plus"></i>
+              <p>Registered Users</p>
+              </a>
+              </li>
               <li class="nav-header">Maintenance</li>
               <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=maintenance/topics" class="nav-link nav-topics">
