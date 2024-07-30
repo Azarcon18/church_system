@@ -71,7 +71,9 @@
         <li class="nav-item"><a class="nav-link" href="<?php echo base_url ?>?p=schedule">Schedule</a></li>
         <li class="nav-item"><a class="nav-link" href="<?php echo base_url ?>?p=about">About Us</a></li>
       </ul>
-      <div class="d-flex align-items-center"></div>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-light btn-sm" id="login-btn">Login</button>
+      </div>
     </div>
     <form class="form-inline ml-4 mr-2 pl-2" id="search-form">
       <div class="input-group">
@@ -84,10 +86,37 @@
   </div>
 </nav>
 
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="login-form">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $(function(){
     $('#login-btn').click(function(){
-      uni_modal("","login.php")
+      $('#loginModal').modal('show');
     })
     $('#navbarResponsive').on('show.bs.collapse', function () {
         $('#mainNav').addClass('navbar-shrink')
