@@ -1,204 +1,199 @@
 <h3 class="text-dark">Dashboard</h3>
-<div class="row ">
+<div class="row">
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box bg-color">
-              <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user-plus"></i></span>
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box bg-color">
+            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user-plus"></i></span>
 
-              <div class="info-box-content">
+            <div class="info-box-content">
                 <span class="info-box-text">Registered Users</span>
                 <span class="info-box-number text-right">
-                  <?php 
-                     $registered_users = $conn->query("SELECT count(*) as total FROM registered_users ")->fetch_assoc()['total'];
-                    echo number_format($registered_users);
-                  ?>
-                  <?php ?>
+                    <?php 
+                        $registered_users = $conn->query("SELECT count(*) as total FROM registered_users ")->fetch_assoc()['total'];
+                        echo number_format($registered_users);
+                    ?>
                 </span>
-              </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
-          </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
 
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+            <span class="info-box-icon bg-light elevation-1"><i class="fas fa-quote-left"></i></span>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-light elevation-1"><i class="fas fa-quote-left"></i></span>
-
-              <div class="info-box-content">
+            <div class="info-box-content">
                 <span class="info-box-text">Total Daily Verses</span>
                 <span class="info-box-number text-right">
-                  <?php 
-                    $verses = $conn->query("SELECT count(id) as total FROM daily_verses ")->fetch_assoc()['total'];
-                    echo number_format($verses);
-                  ?>
-                  <?php ?>
+                    <?php 
+                        $verses = $conn->query("SELECT count(id) as total FROM daily_verses ")->fetch_assoc()['total'];
+                        echo number_format($verses);
+                    ?>
                 </span>
-              </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-blog"></i></span>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-blog"></i></span>
 
-              <div class="info-box-content">
+            <div class="info-box-content">
                 <span class="info-box-text">Published Blogs/Posts</span>
                 <span class="info-box-number text-right">
-                  <?php 
-                    $blogs = $conn->query("SELECT id FROM `blogs` where status = '1' ")->num_rows;
-                    echo number_format($blogs);
-                  ?>
+                    <?php 
+                        $blogs = $conn->query("SELECT id FROM `blogs` where status = '1' ")->num_rows;
+                        echo number_format($blogs);
+                    ?>
                 </span>
-              </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
 
-          <!-- fix for small devices only -->
-          <div class="clearfix hidden-md-up"></div>
+    <!-- fix for small devices only -->
+    <div class="clearfix hidden-md-up"></div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-calendar-day"></i></span>
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-calendar-day"></i></span>
 
-              <div class="info-box-content">
+            <div class="info-box-content">
                 <span class="info-box-text">Upcoming Events</span>
                 <span class="info-box-number text-right">
-                <?php 
-                    $event = $conn->query("SELECT id FROM `events` where date(schedule) >= '".date('Y-m-d')."' ")->num_rows;
-                    echo number_format($event);
-                  ?>
+                    <?php 
+                        $event = $conn->query("SELECT id FROM `events` where date(schedule) >= '".date('Y-m-d')."' ")->num_rows;
+                        echo number_format($event);
+                    ?>
                 </span>
-              </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
-          </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
 
-          
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-calendar-check"></i></span>
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-calendar-check"></i></span>
 
-              <div class="info-box-content">
+            <div class="info-box-content">
                 <span class="info-box-text">Total Appointment</span>
                 <span class="info-box-number text-right">
-                <?php 
-                    $appointment = $conn->query("SELECT count(id) as total FROM appointment_request ")->fetch_assoc()['total'];
-                    echo number_format($appointment);
-                  ?>
-                  <?php ?>
+                    <?php 
+                        $appointment = $conn->query("SELECT count(id) as total FROM appointment_request ")->fetch_assoc()['total'];
+                        echo number_format($appointment);
+                    ?>
                 </span>
-              </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
-          </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
 
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check-circle"></i></span>
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check-circle"></i></span>
 
-              <div class="info-box-content">
+            <div class="info-box-content">
                 <span class="info-box-text">Confirmed Appointment</span>
                 <span class="info-box-number text-right">
-                  <?php 
-                    $appointment = $conn->query("SELECT count(id) as total FROM appointment_request WHERE status= 1")->fetch_assoc()['total'];
-                    echo number_format($appointment);
-                  ?>
-                  <?php ?>
+                    <?php 
+                        $appointment = $conn->query("SELECT count(id) as total FROM appointment_request WHERE status= 1")->fetch_assoc()['total'];
+                        echo number_format($appointment);
+                    ?>
                 </span>
-              </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
-          </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-half"></i></span>
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-half"></i></span>
 
-              <div class="info-box-content">
+            <div class="info-box-content">
                 <span class="info-box-text">Pending Appointment</span>
                 <span class="info-box-number text-right">
-                  <?php 
-                    $appointment = $conn->query("SELECT count(id) as total FROM appointment_request WHERE status= 0")->fetch_assoc()['total'];
-                    echo number_format($appointment);
-                  ?>
-                  <?php ?>
+                    <?php 
+                        $appointment = $conn->query("SELECT count(id) as total FROM appointment_request WHERE status= 0")->fetch_assoc()['total'];
+                        echo number_format($appointment);
+                    ?>
                 </span>
-              </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
-          </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-times-circle"></i></span>
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-times-circle"></i></span>
 
-              <div class="info-box-content">
+            <div class="info-box-content">
                 <span class="info-box-text">Declined Appointment</span>
                 <span class="info-box-number text-right">
-                  <?php 
-                    $appointment = $conn->query("SELECT count(id) as total FROM appointment_request WHERE status= 2")->fetch_assoc()['total'];
-                    echo number_format($appointment);
-                  ?>
-                  <?php ?>
+                    <?php 
+                        $appointment = $conn->query("SELECT count(id) as total FROM appointment_request WHERE status= 2")->fetch_assoc()['total'];
+                        echo number_format($appointment);
+                    ?>
                 </span>
-              </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
-          </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
 
-          
-
-        
 </div>
-
 
 <div class="row mt-5">
-          <div class="col-md-4">
-            <div class="card bg-light" style="height: 500px;">
+    <div class="col-md-4">
+        <div class="card bg-white" style="height: 500px;">
             <div class="card-header">
-                                    <h3 class="card-title">Total Appointment Requests by Type</h3>
-                                    <div class="card-tools"> <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse"> <i data-lte-icon="expand" class="bi bi-plus-lg"></i> <i data-lte-icon="collapse" class="bi bi-dash-lg"></i> </button> <button type="button" class="btn btn-tool" data-lte-toggle="card-remove"> <i class="bi bi-x-lg"></i> </button> </div>
-                                </div> <!-- /.card-header -->
-                                <div class="card-body"> <!--begin::Row-->
-                                    <div class="row">
-                                        <div class="col-12" >
-                                            <div id="pie-chart"></div>
-                                        </div> <!-- /.col -->
-                                    </div> <!--end::Row-->
-                                </div>
+                <h3 class="card-title">Total Appointment Requests by Type</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
+                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
             </div>
-          </div>
-          <div class="col-md-8">
-            <div class="card bg-light" style="height: 500px;">
-       
-                                <div class="card-header ">
-                                        <h3 class="card-title">Daily Appointment Requests</h3> 
-                                </div>
-                                <div class="card-body">
-                                    <div class="position-relative mb-4">
-                                        <div id="monthly-appointments-chart"></div>
-                                    </div>
-                                </div>
-                            </div> 
-          
-
+            <!-- /.card-header -->
+            <div class="card-body">
+                <!--begin::Row-->
+                <div class="row">
+                    <div class="col-12">
+                        <div id="pie-chart"></div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!--end::Row-->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card bg-white" style="height: 500px;">
+            <div class="card-header">
+                <h3 class="card-title">Daily Appointment Requests</h3>
+            </div>
+            <div class="card-body">
+                <div class="position-relative mb-4">
+                    <div id="monthly-appointments-chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
- crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
 <script>
 function fetchPieChartData() {
     fetch('get_piechart.php')
@@ -247,9 +242,9 @@ function fetchPieChartData() {
 }
 
 fetchPieChartData();
-//line chart
+
 function fetchMonthlyAppointments() {
-    fetch('fetch_data.php') // Adjust the path to your PHP script
+    fetch('fetch_data.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -258,7 +253,6 @@ function fetchMonthlyAppointments() {
         })
         .then(data => {
             if (data.success) {
-                // Prepare data for ApexCharts
                 const dates = [];
                 const totals = [];
                 const currentDate = new Date();
@@ -273,7 +267,6 @@ function fetchMonthlyAppointments() {
                     totals.push(appointment ? appointment.total : 0);
                 }
 
-                // Initialize ApexCharts
                 const options = {
                     series: [{
                         name: 'Appointment Requests',
@@ -311,8 +304,5 @@ function fetchMonthlyAppointments() {
         });
 }
 
-// Fetch the monthly appointments data when the page loads
 document.addEventListener('DOMContentLoaded', fetchMonthlyAppointments);
-
 </script>
-
