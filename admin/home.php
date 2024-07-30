@@ -1,6 +1,6 @@
-<h3 class="text-dark bg-light">Dashboard</h3>
-<div class="row ">
-
+<h1 class="text-light">Welcome to <?php echo $_settings->info('name') ?></h1>
+<hr class="border-light">
+<div class="row">
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box bg-color">
               <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user-plus"></i></span>
