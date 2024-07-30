@@ -76,7 +76,7 @@
 
 </style>
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-expand bs-primary-rgb">
+<aside class="main-sidebar sidebar-light-primary elevation-4 sidebar-no-expand bs-primary-rgb">
   <!-- Brand Logo -->
   <a href="<?php echo base_url ?>admin" class="brand-link bg-primary text-sm">
     <img src="<?php echo validate_image($_settings->info('logo'))?>" alt="Store Logo" class="brand-image img-circle elevation-3" style="width: 1.8rem;height: 1.8rem;max-height: unset">
