@@ -11,11 +11,12 @@
                     </div>
                     <div class="form-group">
                         <label for="contact" class="control-label">Contact</label>
-                        <input type="text" name="contact" id="contact" class="form-control rounded-0" required>
+                        <input type="text" name="contact" id="contact" class="form-control rounded-0" pattern="09[0-9]{9}" maxlength="11" required>
+                        <small class="form-text text-muted">Format: 09xxxxxxxxx</small>
                     </div>
                     <div class="form-group">
                         <label for="address" class="control-label">Address</label>
-                        <textarea colspan='3' type="text" name="address" id="address" class="form-control rounded-0" required></textarea>
+                        <textarea name="address" id="address" class="form-control rounded-0" required></textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -25,15 +26,24 @@
                     </div>
                     <div class="form-group">
                         <label for="remarks" class="control-label">Remarks</label>
-                        <textarea colspan='3' type="text" name="remarks" id="remarks" class="form-control rounded-0" required></textarea>
+                        <textarea name="remarks" id="remarks" class="form-control rounded-0" required></textarea>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
 <script>
     $(function(){
+        $('#contact').on('input', function() {
+            // Ensure only numbers and start with '09' are allowed in the contact field
+            this.value = this.value.replace(/[^0-9]/g, '').replace(/^(?!09)/, '09');
+            if (this.value.length > 11) {
+                this.value = this.value.slice(0, 11);
+            }
+        });
+
         $('#appointment-form').submit(function(e){
             e.preventDefault();
             var _this = $(this)

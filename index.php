@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php require_once('inc/header.php') ?>
-<body class="dark-mode">
+<body style="background-color: white;">
 <?php if($_settings->chk_flashdata('success')): ?>
 <script>
 	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
