@@ -3,7 +3,7 @@
     var isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-navy">
+<nav class="navbar navbar-expand-lg navbar-light bg-seconda">
     <div class="container px-4 px-lg-5">
         <button class="navbar-toggler btn btn-sm" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
