@@ -2,15 +2,16 @@
 $title = "Schedule Request";
 $sub_title = "";
 ?>
-<!-- Header-->
+<!-- Header -->
 <header class="bg-dark py-5" id="main-header">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder"><?php echo $title ?></h1>
+            <h1 class="display-4 fw-bolder"><?php echo $title; ?></h1>
         </div>
     </div>
 </header>
-<!-- Section-->
+
+<!-- Section -->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <p><i>Select the type of Appointment you desire to create a schedule request.</i></p>
@@ -29,19 +30,19 @@ $sub_title = "";
                 </div>
             </div>
         </div>
-        <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id='sched-type-list'>
+        <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id="sched-type-list">
             <?php 
                 $categories = $conn->query("SELECT * FROM `schedule_type` WHERE `status` = 1 ORDER BY `sched_type` ASC ");
                 while($row = $categories->fetch_assoc()):
                     $row['description'] = strip_tags(stripslashes(html_entity_decode($row['description'])));
             ?>
             <div class="col mb-6 mb-2 text-light item">
-                <a href="javascript:void(0)" class="card sched-item text-decoration-none" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['sched_type'] ?>">
+                <a href="javascript:void(0)" class="card sched-item text-decoration-none" data-id="<?php echo $row['id']; ?>" data-name="<?php echo $row['sched_type']; ?>">
                     <div class="card-body p-4">
-                        <div class="">
-                            <h5 class="fw-bolder border-bottom border-primary"><?php echo $row['sched_type'] ?></h5>
+                        <div>
+                            <h5 class="fw-bolder border-bottom border-primary"><?php echo $row['sched_type']; ?></h5>
                         </div>
-                        <p class="m-0 truncate"><?php echo $row['description'] ?></p>
+                        <p class="m-0 truncate"><?php echo $row['description']; ?></p>
                     </div>
                 </a>
             </div>
@@ -120,17 +121,17 @@ $sub_title = "";
 </style>
 
 <script>
-    $(function(){
-        $('.sched-item').click(function(){
+    $(function() {
+        $('.sched-item').click(function() {
             var name = $(this).attr('data-name');
             var id = $(this).attr('data-id');
             uni_modal("Create an Appointment Request for " + name, "create_appointment.php?sched_type_id=" + id, "mid-large");
         });
-        $('#search').on('input', function(){
+        $('#search').on('input', function() {
             var _txt = $(this).val().toLowerCase();
-            $('#sched-type-list .item').each(function(){
+            $('#sched-type-list .item').each(function() {
                 var _contain = $(this).text().toLowerCase().trim();
-                if(_contain.includes(_txt)){
+                if (_contain.includes(_txt)) {
                     $(this).removeClass('fade-out').addClass('fade-in').show();
                 } else {
                     $(this).removeClass('fade-in').addClass('fade-out').hide();
@@ -140,8 +141,8 @@ $sub_title = "";
         });
     });
 
-    function check_result(){
-        if($('#sched-type-list .item:visible').length <= 0){
+    function check_result() {
+        if ($('#sched-type-list .item:visible').length <= 0) {
             $('#noResult').removeClass('fade-out').addClass('fade-in').show();
         } else {
             $('#noResult').removeClass('fade-in').addClass('fade-out').hide();
