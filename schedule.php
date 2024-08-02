@@ -1,7 +1,9 @@
 <?php 
+require_once('db_connect.php'); // Include your database connection file
 $title = "Schedule Request";
 $sub_title = "";
 ?>
+
 <!-- Header-->
 <header class="bg-dark py-5" id="main-header">
     <div class="container px-4 px-lg-5 my-5">
@@ -10,10 +12,11 @@ $sub_title = "";
         </div>
     </div>
 </header>
+
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
-        <p><i>Select the type of Appointment you desired to create a schedule request.</i></p>
+        <p><i>Select the type of Appointment you desire to create a schedule request.</i></p>
         <hr>
         <div class="col-12">
             <div class="row">
@@ -30,9 +33,7 @@ $sub_title = "";
             </div>
         </div>
         <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id='sched-type-list'>
-           
             <?php 
-                $whereData = "";
                 $categories = $conn->query("SELECT * FROM `schedule_type` where `status` = 1 order by `sched_type` asc ");
                 while($row = $categories->fetch_assoc()):
                     foreach($row as $k=> $v){
@@ -56,6 +57,53 @@ $sub_title = "";
         </div>
     </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <h5 class="modal-title" id="appointmentModalLabel">Create an Appointment Request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Modal Body-->
+            <div class="modal-body">
+                <form id="appointment-form">
+                    <input type="hidden" name="sched_type_id" id="sched_type_id">
+                    <div class="mb-3">
+                        <label for="appointment-title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="appointment-title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appointment-description" class="form-label">Description</label>
+                        <textarea class="form-control" id="appointment-description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appointment-date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="appointment-date" name="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appointment-time" class="form-label">Time</label>
+                        <input type="time" class="form-control" id="appointment-time" name="time" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appointment-location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="appointment-location" name="location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appointment-participants" class="form-label">Participants</label>
+                        <input type="text" class="form-control" id="appointment-participants" name="participants" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
     /* Glass effect styles */
@@ -132,23 +180,25 @@ $sub_title = "";
 <script>
     $(function(){
         $('.sched-item').click(function(){
-            var name = $(this).attr('data-name')
-            var id = $(this).attr('data-id')
-            uni_modal("Create an Appointment Request for "+name,"create_appointment.php?sched_type_id="+id,"mid-large")
-        })
+            var name = $(this).attr('data-name');
+            var id = $(this).attr('data-id');
+            $('#sched_type_id').val(id);
+            $('#appointmentModalLabel').text("Create an Appointment Request for " + name);
+            $('#appointmentModal').modal('show');
+        });
         $('#search').on('input',function(){
-            var _txt = $(this).val().toLowerCase()
+            var _txt = $(this).val().toLowerCase();
             $('#sched-type-list .item').each(function(){
-                var _contain = $(this).text().toLowerCase().trim()
+                var _contain = $(this).text().toLowerCase().trim();
                 if(_contain.includes(_txt) === true){
                     $(this).removeClass('fade-out').addClass('fade-in').show();
                 }else{
                     $(this).removeClass('fade-in').addClass('fade-out').hide();
                 }
-            })
-            check_result()
-        })
-    })
+            });
+            check_result();
+        });
+    });
 
     function check_result(){
         if($('#sched-type-list .item:visible').length <= 0){
@@ -161,4 +211,21 @@ $sub_title = "";
             }
         }
     }
+
+    $('#appointment-form').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: 'save_appointment.php',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response){
+                if(response == 1){
+                    alert('Appointment request has been successfully created.');
+                    location.reload();
+                } else {
+                    alert('Failed to create appointment request.');
+                }
+            }
+        });
+    });
 </script>

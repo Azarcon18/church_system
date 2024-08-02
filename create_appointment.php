@@ -32,6 +32,7 @@ $user_address = isset($_SESSION['user_address']) ? htmlspecialchars($_SESSION['u
                         <input type="text" name="contact" id="contact" class="form-control rounded-0" 
                                <?php if ($isLoggedIn): ?> 
                                    value="<?php echo $user_contact; ?>" 
+                                   
                                <?php endif; ?>
                                pattern="09[0-9]{9}" maxlength="11" required>
                         <small class="form-text text-muted">Format: 09xxxxxxxxx</small>
@@ -39,8 +40,12 @@ $user_address = isset($_SESSION['user_address']) ? htmlspecialchars($_SESSION['u
                     <div class="form-group">
                         <label for="address" class="control-label">Address</label>
                         <textarea name="address" id="address" class="form-control rounded-0" 
-                                  <?php if ($isLoggedIn): ?> readonly <?php endif; ?>
-                                  required><?php echo $user_address; ?></textarea>
+                                  <?php if ($isLoggedIn): ?> 
+                                      
+                                  <?php endif; ?>
+                                  required>
+                          <?php echo $user_address; ?>
+                        </textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -60,7 +65,7 @@ $user_address = isset($_SESSION['user_address']) ? htmlspecialchars($_SESSION['u
             <div class="alert alert-danger mt-3">You need to be logged in to schedule an appointment.</div>
         <?php endif; ?>
         
-        <button type="submit" class="btn btn-primary mt-3" <?php if (!$isLoggedIn): ?> disabled <?php endif; ?>>Submit</button>
+        <!-- <button type="submit" class="btn btn-primary mt-3" <?//php if (!$isLoggedIn): ?> disabled <?//php endif; ?>>Submit</button> -->
     </form>
 </div>
 
