@@ -11,7 +11,7 @@ class Login extends DBConnection {
 		ini_set('display_error', 1);
 	}
 	public function __destruct(){
-		parent::__destruct();
+		parent::__destruct(); 
 	}
 	public function index(){
 		echo "<h1>Access Denied</h1> <a href='".base_url."'>Go Back.</a>";

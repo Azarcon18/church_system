@@ -22,21 +22,54 @@ Class Master extends DBConnection {
 		}
 	}
 
-	function login_user($email, $password) {
-        $stmt = $this->conn->prepare('SELECT * FROM registered_users WHERE email = ?');
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
+	// function login_user($email, $password) {
+    //     $stmt = $this->conn->prepare('SELECT * FROM registered_users WHERE email = ?');
+    //     $stmt->execute([$email]);
+    //     $user = $stmt->fetch();
     
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['name'];
-            $_SESSION['photo'] = $user['photo'];
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     if ($user && password_verify($password, $user['password'])) {
+    //         $_SESSION['user_id'] = $user['id'];
+    //         $_SESSION['user_name'] = $user['name'];
+    //         $_SESSION['photo'] = $user['photo'];
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
+	public function login_user() {
+        extract($_POST);
+
+        // Query to get the user by email
+        $sql = "SELECT * FROM registered_users WHERE email = '$email'";
+        $qry = $this->conn->query($sql);
+
+        if ($qry->num_rows > 0) {
+            $user = $qry->fetch_assoc();
+            // Verify password
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_logged_in'] = true;
+                $_SESSION['user_id'] = $user['id'];
+				$_SESSION['user_username'] = $user['user_name'];
+                $_SESSION['user_fullname'] = $user['name'];
+                $_SESSION['user_email'] = $user['email'];
+				$_SESSION['user_address'] = $user['address'];
+				$_SESSION['user_phone_no'] = $user['phone_no'];
+                $_SESSION['user_photo'] = $user['photo'] ? $user['photo'] : 'defaultphoto.jpg';
+// `, `date_created`, `date_updated`, `phone_no`,
+                $resp['status'] = 'success';
+            } else {
+                $resp['status'] = 'error';
+                $resp['msg'] = 'Incorrect email or password.';
+            }
+        } else {
+            $resp['status'] = 'error';
+            $resp['msg'] = 'Incorrect email or password.';
+        }
+
+        return json_encode($resp);
+    }
+	
 	function save_user() {
 		extract($_POST);
 	

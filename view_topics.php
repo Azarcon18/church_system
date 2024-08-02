@@ -1,6 +1,7 @@
 <?php 
 $title = "All Book Categories";
 $sub_title = "";
+$activeTopicId = isset($_GET['t']) ? md5($_GET['t']) : ''; // Get the current topic ID
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +26,11 @@ $sub_title = "";
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
+        .active-topic {
+            background-color: white;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -43,16 +49,16 @@ $sub_title = "";
             <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center">
                 <?php 
                     // Assuming $conn is already defined and connected to the database
-                    $whereData = "";
                     $categories = $conn->query("SELECT * FROM `topics` WHERE status = 1 ORDER BY name ASC");
                     while($row = $categories->fetch_assoc()):
                         foreach($row as $k => $v){
                             $row[$k] = trim(stripslashes($v));
                         }
                         $row['description'] = strip_tags(stripslashes(html_entity_decode($row['description'])));
+                        $isActive = md5($row['id']) === $activeTopicId ? 'active-topic' : '';
                 ?>
                 <div class="col mb-6 mb-2 text-light">
-                    <a href="./?p=articles&t=<?php echo md5($row['id']); ?>" class="card category-item text-decoration-none" style="background-color: #21252970;">
+                    <a href="./?p=articles&t=<?php echo md5($row['id']); ?>" class="card category-item text-decoration-none <?php echo $isActive; ?>" style="background-color: #21252970;">
                         <div class="card-body p-4 text-center text-dark">
                             <div class="">
                                 <!-- Product name -->
