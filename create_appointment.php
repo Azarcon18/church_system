@@ -42,9 +42,6 @@
 			e.preventDefault();
             var _this = $(this)
 			 $('.err-msg').remove();
-
-            
-
 			start_loader();
 			$.ajax({
 				url:_base_url_+"classes/Master.php?f=save_appointment_req",
