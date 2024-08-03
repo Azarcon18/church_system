@@ -14,6 +14,7 @@
     <input type="text" name="contact" id="contact" class="form-control rounded-0" required pattern="09[0-9]{9}" title="Contact number must start with 09 and be 11 digits long">
 </div>
 
+
                     <div class="form-group">
                         <label for="address" class="control-label">Address</label>
                         <textarea colspan='3' type="text" name="address" id="address" class="form-control rounded-0" required></textarea>
@@ -39,6 +40,11 @@
 </div>
 <script>
     $(function(){
+        // Restrict input to numbers only for the contact field
+        $('#contact').on('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
         $('#appointment-form').submit(function(e){
             e.preventDefault();
             var _this = $(this);
