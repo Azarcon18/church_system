@@ -1,3 +1,50 @@
+<style>
+  .navbar {
+    background: linear-gradient(90deg, #ff7f50, #1e90ff, #32cd32); /* Coral, DodgerBlue, LimeGreen */
+    background-size: 600% 600%;
+    animation: gradientBackground 10s ease infinite;
+  }
+
+  @keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .navbar-nav .nav-item .nav-link {
+    color: white; 
+  }
+
+  .navbar-nav .nav-item .nav-link:hover, 
+  .navbar-nav .nav-item .nav-link:active {
+    background-color: rgba(0, 0, 0, 0.1); /* Slight dark overlay on hover */
+    color: white;
+  }
+
+  .dropdown-menu {
+    background-color: white;
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .dropdown-menu .dropdown-item {
+    color: white; 
+  }
+
+  .dropdown-menu .dropdown-item:hover {
+    background-color: #66a8ef; 
+    color: white;
+  }
+
+  .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-seconda">
     <div class="container px-4 px-lg-5">
         <button class="navbar-toggler btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +97,32 @@
                 </form>
     </div>
 </nav>
+
+<script>
+  $(function(){
+    $('#login-btn').click(function(){
+      uni_modal("","login.php")
+    })
+    $('#navbarResponsive').on('show.bs.collapse', function () {
+        $('#mainNav').addClass('navbar-shrink')
+    })
+    $('#navbarResponsive').on('hidden.bs.collapse', function () {
+        if($('body').offset.top == 0)
+          $('#mainNav').removeClass('navbar-shrink')
+    })
+
+    $('#search-form').submit(function(e){
+      e.preventDefault()
+      var sTxt = $('[name="search"]').val()
+      if(sTxt != '')
+        location.href = './?p=search&search='+sTxt;
+    })
+    $('#donation').click(function(){
+      uni_modal('Donation','donate.php')
+    })
+  })
+</script>
+
 
 <!-- Bootstrap Bundle with Popper (for dropdowns) -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
