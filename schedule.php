@@ -55,12 +55,7 @@ $sub_title = "";
         </div>
     </div>
 </section>
-<!-- Footer -->
-<footer class="bg-dark text-white py-4">
-    <div class="container text-center">
-        <p class="mb-0">&copy; <?php echo date("Y"); ?> Your Company Name. All rights reserved.</p>
-    </div>
-</footer>
+
 <script>
     $(function(){
         $('.sched-item').click(function(){
