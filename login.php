@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone_no" class="control-label">Phone Number</label>
-                        <input type="text" class="form-control" name="phone_no" id="phone_no" required maxlength="11">
+                        <input type="text" class="form-control" name="phone_no" id="phone_no" required>
                     </div>
                     <div class="form-group">
                         <label for="address" class="control-label">Address</label>
@@ -86,18 +86,24 @@
 </div>
 
 <script>
-function validatePhoneNumber() {
-    const phoneInput = document.getElementById('phone_no').value;
-    const phoneRegex = /^09\d{9}$/;
+    function validatePhoneNumber() {
+        var phone_no = document.getElementById('phone_no').value;
+        var phone_regex = /^09\d{9}$/;
 
-    if (!phoneRegex.test(phoneInput)) {
-        alert("Phone number must start with 09 and be 11 digits long.");
-        return false;
+        if (!phone_regex.test(phone_no)) {
+            alert('Please enter a valid phone number that starts with "09" and has exactly 11 digits.');
+            return false;
+        }
+        return true;
     }
-    return true;
-}
+
+    // Restrict input to numeric values only
+    document.getElementById('phone_no').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
 </script>
 
 <?php require_once('inc/footer.php'); ?>
+
 </body>
 </html>
