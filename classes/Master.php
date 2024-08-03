@@ -21,6 +21,84 @@ Class Master extends DBConnection {
 			exit;
 		}
 	}
+
+	// function login_user($email, $password) {
+    //     $stmt = $this->conn->prepare('SELECT * FROM registered_users WHERE email = ?');
+    //     $stmt->execute([$email]);
+    //     $user = $stmt->fetch();
+    
+    //     if ($user && password_verify($password, $user['password'])) {
+    //         $_SESSION['user_id'] = $user['id'];
+    //         $_SESSION['user_name'] = $user['name'];
+    //         $_SESSION['photo'] = $user['photo'];
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+	public function login_user() {
+        extract($_POST);
+
+        // Query to get the user by email
+        $sql = "SELECT * FROM registered_users WHERE email = '$email'";
+        $qry = $this->conn->query($sql);
+
+        if ($qry->num_rows > 0) {
+            $user = $qry->fetch_assoc();
+            // Verify password
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_logged_in'] = true;
+                $_SESSION['user_id'] = $user['id'];
+				$_SESSION['user_username'] = $user['user_name'];
+                $_SESSION['user_fullname'] = $user['name'];
+                $_SESSION['user_email'] = $user['email'];
+				$_SESSION['user_address'] = $user['address'];
+				$_SESSION['user_phone_no'] = $user['phone_no'];
+                $_SESSION['user_photo'] = $user['photo'] ? $user['photo'] : 'defaultphoto.jpg';
+// `, `date_created`, `date_updated`, `phone_no`,
+                $resp['status'] = 'success';
+            } else {
+                $resp['status'] = 'error';
+                $resp['msg'] = 'Incorrect email or password.';
+            }
+        } else {
+            $resp['status'] = 'error';
+            $resp['msg'] = 'Incorrect email or password.';
+        }
+
+        return json_encode($resp);
+    }
+	
+	function save_user() {
+		extract($_POST);
+	
+		// Hash the password before storing it
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+	
+		// Build the SQL statement
+		$sql = "INSERT INTO registered_users (name, user_name, email, password, phone_no, address, photo) 
+				VALUES ('$name', '$user_name', '$email', '$hashed_password', '$phone_no', '$address', 'defaultphoto.jpg')";
+	
+		// Execute the query
+		$save = $this->conn->query($sql);
+	
+		if ($this->capture_err()) {
+			return $this->capture_err();
+		}
+	
+		if ($save) {
+			$resp['status'] = 'success';
+			$this->settings->set_flashdata('success', "Account successfully created.");
+		} else {
+			$resp['status'] = 'failed';
+			$resp['err'] = $this->conn->error . "[{$sql}]";
+		}
+		return json_encode($resp);
+	}
+	
+
+
 	function save_topic(){
 		extract($_POST);
 		$data = "";

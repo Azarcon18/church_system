@@ -1,5 +1,5 @@
 
-            </div>
+</div>
             <div class="col-lg-4 border-left">
               <h4><b>Recent Blogs</b></h4>
                    <hr>

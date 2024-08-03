@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2021 at 09:55 AM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.7
+-- Generation Time: Jul 08, 2024 at 10:05 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,7 +38,7 @@ CREATE TABLE `appointment_request` (
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `appointment_request`
@@ -47,7 +47,8 @@ CREATE TABLE `appointment_request` (
 INSERT INTO `appointment_request` (`id`, `sched_type_id`, `fullname`, `contact`, `address`, `schedule`, `remarks`, `status`, `date_created`, `date_updated`) VALUES
 (1, 2, 'John Smith', '09123456789', '23rd St., Sample Address, Here City', '2021-09-24 09:00:00', 'Sample Only', 1, '2021-09-16 14:10:37', '2021-09-16 14:52:47'),
 (2, 1, 'Claire Blake', '09445122988', 'Sampel Address', '2021-09-20 10:00:00', 'Vehicle Blessing', 0, '2021-09-16 14:12:13', NULL),
-(3, 1, 'Sample', '1231654', 'Sample', '2021-09-17 16:00:00', 'Sample', 2, '2021-09-16 14:13:19', '2021-09-16 14:52:57');
+(3, 1, 'Sample', '1231654', 'Sample', '2021-09-17 16:00:00', 'Sample', 2, '2021-09-16 14:13:19', '2021-09-16 14:52:57'),
+(7, 2, 'Jhon Louie Rubin', '09451295199', 'maalat', '2024-07-04 20:06:00', 'remarsk', 0, '2024-07-02 20:06:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -69,7 +70,7 @@ CREATE TABLE `blogs` (
   `author_id` int(30) NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `blogs`
@@ -93,7 +94,7 @@ CREATE TABLE `daily_verses` (
   `display_date` date NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `daily_verses`
@@ -116,7 +117,7 @@ CREATE TABLE `events` (
   `schedule` date NOT NULL,
   `img_path` text DEFAULT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `events`
@@ -130,6 +131,33 @@ INSERT INTO `events` (`id`, `title`, `description`, `schedule`, `img_path`, `dat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `registered_users`
+--
+
+CREATE TABLE `registered_users` (
+  `user_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `user_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` text DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `phone_no` varchar(20) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `photo` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `registered_users`
+--
+
+INSERT INTO `registered_users` (`user_id`, `name`, `user_name`, `email`, `password`, `address`, `date_created`, `date_updated`, `phone_no`, `status`, `photo`) VALUES
+(10, 'Robert', 'Robert', 'robert@gmail.com', '$2y$10$Gcai1Cald1cWuftGv1aNauJZtKpzqmQbqsxPhlu73eZNucOX8l42u', 'Maalat, Madridejos, Cebu\r\naaa', '2024-07-07 12:44:53', '2024-07-07 12:44:53', '09451295199', 'active', 'defaultphoto.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `schedule_type`
 --
 
@@ -138,7 +166,7 @@ CREATE TABLE `schedule_type` (
   `sched_type` text NOT NULL,
   `description` text NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schedule_type`
@@ -159,14 +187,14 @@ CREATE TABLE `system_info` (
   `id` int(30) NOT NULL,
   `meta_field` text NOT NULL,
   `meta_value` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `system_info`
 --
 
 INSERT INTO `system_info` (`id`, `meta_field`, `meta_value`) VALUES
-(1, 'name', 'Church Management System'),
+(1, 'name', 'Church Management System - PHP'),
 (6, 'short_name', 'CMS - PHP'),
 (11, 'logo', 'uploads/1631753220_church_logo.jpg'),
 (13, 'user_avatar', 'uploads/user_avatar.jpg'),
@@ -190,7 +218,7 @@ CREATE TABLE `topics` (
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=Inactive, 1=Active',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `topics`
@@ -212,7 +240,7 @@ CREATE TABLE `uploads` (
   `file_path` text NOT NULL,
   `dir_code` varchar(50) NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `uploads`
@@ -247,7 +275,7 @@ CREATE TABLE `users` (
   `type` tinyint(1) NOT NULL DEFAULT 0,
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -288,6 +316,12 @@ ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `registered_users`
+--
+ALTER TABLE `registered_users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- Indexes for table `schedule_type`
 --
 ALTER TABLE `schedule_type`
@@ -325,7 +359,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointment_request`
 --
 ALTER TABLE `appointment_request`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `blogs`
@@ -344,6 +378,12 @@ ALTER TABLE `daily_verses`
 --
 ALTER TABLE `events`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `registered_users`
+--
+ALTER TABLE `registered_users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `schedule_type`

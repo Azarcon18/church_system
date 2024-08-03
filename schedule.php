@@ -29,7 +29,8 @@ $sub_title = "";
                 </div>
             </div>
         </div>
-        <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id='sched-type-list'>
+        <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id = 'sched-type-list'>
+           
             <?php 
                 $whereData = "";
                 $categories = $conn->query("SELECT * FROM `schedule_type` where `status` = 1 order by `sched_type` asc ");
@@ -55,12 +56,6 @@ $sub_title = "";
         </div>
     </div>
 </section>
-<!-- Footer -->
-<footer class="bg-dark text-white py-4">
-    <div class="container text-center">
-        <p class="mb-0">&copy; <?php echo date("Y"); ?> Your Company Name. All rights reserved.</p>
-    </div>
-</footer>
 <script>
     $(function(){
         $('.sched-item').click(function(){

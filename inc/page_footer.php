@@ -59,13 +59,10 @@
   })
 </script>
 <!-- Footer-->
-<footer class="py-5 bg-dark">
+<!--footer class="py-5 bg-dark">
             <div class="container">
-              <p class="m-0 text-center text-white"> &copy; <?php echo $_settings->info('short_name') ?> 2024</p>
-              <p class="m-0 text-center text-white">Developed By: <a href="mailto:johnricosullano19@gmail.com">Robert M. Azarcon</a></p>
-              <p class="m-0 text-center text-white">Desginer By: <a href="mailto:johnricosullano19@gmail.com">John Rico Sullano</a></p>
-              <p class="m-0 text-center text-white">Researcher By: <a href="mailto:johnricosullano19@gmail.com">John Carlo Jagdon</a></p>
-              <p class="m-0 text-center text-white">Researcher By: <a href="mailto:johnricosullano19@gmail.com">Geo Rico</a></p>
+              <p class="m-0 text-center text-white">Copyright &copy; <?php echo $_settings->info('short_name') ?> 2024</p>
+              <p class="m-0 text-center text-white">Developed By: <a href="></a></p>
           </div>
         </footer>
 
