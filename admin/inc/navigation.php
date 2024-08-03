@@ -76,7 +76,7 @@
 
 </style>
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-expand">
+<aside class="main-sidebar sidebar-light-primary elevation-4 sidebar-no-expand bs-primary-rgb">
   <!-- Brand Logo -->
   <a href="<?php echo base_url ?>admin" class="brand-link bg-primary text-sm">
     <img src="<?php echo validate_image($_settings->info('logo'))?>" alt="Store Logo" class="brand-image img-circle elevation-3" style="width: 1.8rem;height: 1.8rem;max-height: unset">
@@ -120,6 +120,13 @@
                   <p>Appointment Requests</p>
                 </a>
               </li>
+             </li>
+             <li class="nav-item dropdown">
+             <a href="<?php echo base_url ?>admin/?page=registered_users" class="nav-link nav-registered_users">
+             <i class="nav-icon fas fa-user-plus"></i>
+              <p>Registered Users</p>
+              </a>
+              </li>
               <li class="nav-header">Maintenance</li>
               <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=maintenance/topics" class="nav-link nav-topics">
@@ -138,6 +145,15 @@
                   <i class="nav-icon fas fa-users"></i>
                   <p>Staff List</p>
                 </a>
+
+              </li>
+              <li class="nav-item dropdown ">
+    <a href="<?php echo base_url ?>admin/?page=reports" class="nav-link nav-reports">
+        <i class="nav-icon fas fa-chart-line"></i>
+        <p>Reports</p>
+    </a>
+</li>
+
               </li>
               <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=system_info" class="nav-link nav-system_info">

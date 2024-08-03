@@ -29,8 +29,7 @@ $sub_title = "";
                 </div>
             </div>
         </div>
-        <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id = 'sched-type-list'>
-           
+        <div class="row gx-2 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3 justify-content-center" id='sched-type-list'>
             <?php 
                 $whereData = "";
                 $categories = $conn->query("SELECT * FROM `schedule_type` where `status` = 1 order by `sched_type` asc ");
@@ -41,7 +40,7 @@ $sub_title = "";
                     $row['description'] = strip_tags(stripslashes(html_entity_decode($row['description'])));
             ?>
             <div class="col mb-6 mb-2 text-light item">
-                <a href="javascript:void(0)" class="card sched-item text-decoration-none bg-gradient" data-id="<?php echo $row['id'] ?>"  data-name="<?php echo $row['sched_type'] ?>">
+                <a href="javascript:void(0)" class="card sched-item text-decoration-none" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['sched_type'] ?>">
                     <div class="card-body p-4">
                         <div class="">
                             <!-- Product name-->
@@ -56,6 +55,12 @@ $sub_title = "";
         </div>
     </div>
 </section>
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p class="mb-0">&copy; <?php echo date("Y"); ?> Your Company Name. All rights reserved.</p>
+    </div>
+</footer>
 <script>
     $(function(){
         $('.sched-item').click(function(){
@@ -68,21 +73,24 @@ $sub_title = "";
             $('#sched-type-list .item').each(function(){
                 var _contain = $(this).text().toLowerCase().trim()
                 if(_contain.includes(_txt) === true){
-                    $(this).toggle(true)
+                    $(this).removeClass('fade-out').addClass('fade-in').show();
                 }else{
-                    $(this).toggle(false)
+                    $(this).removeClass('fade-in').addClass('fade-out').hide();
                 }
             })
             check_result()
         })
     })
+
     function check_result(){
         if($('#sched-type-list .item:visible').length <= 0){
-            if($('#noResult:visible').length <= 0)
-            $('#noResult').show('slow');
+            if($('#noResult').hasClass('fade-out')){
+                $('#noResult').removeClass('fade-out').addClass('fade-in').show();
+            }
         }else{
-            if($('#noResult:visible').length > 0)
-            $('#noResult').hide('slow');
+            if($('#noResult').hasClass('fade-in')){
+                $('#noResult').removeClass('fade-in').addClass('fade-out').hide();
+            }
         }
     }
 </script>
