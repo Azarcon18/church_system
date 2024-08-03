@@ -50,7 +50,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="signup-form" action="classes/register.php" method="POST">
+                <form id="signup-form" action="classes/register.php" method="POST" onsubmit="return validatePhoneNumber()">
                     <div class="form-group">
                         <label for="name" class="control-label">Full Name</label>
                         <input type="text" class="form-control" name="name" required>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone_no" class="control-label">Phone Number</label>
-                        <input type="text" class="form-control" name="phone_no" required>
+                        <input type="text" class="form-control" name="phone_no" id="phone_no" required maxlength="11">
                     </div>
                     <div class="form-group">
                         <label for="address" class="control-label">Address</label>
@@ -85,8 +85,19 @@
     </div>
 </div>
 
+<script>
+function validatePhoneNumber() {
+    const phoneInput = document.getElementById('phone_no').value;
+    const phoneRegex = /^09\d{9}$/;
+
+    if (!phoneRegex.test(phoneInput)) {
+        alert("Phone number must start with 09 and be 11 digits long.");
+        return false;
+    }
+    return true;
+}
+</script>
+
 <?php require_once('inc/footer.php'); ?>
-
-
 </body>
 </html>
