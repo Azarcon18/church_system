@@ -20,8 +20,6 @@
 					<col width="25%">
 					<col width="30%">
 					<col width="10%">
-					<col width="10%">
-					<col width="10%">
 				</colgroup>
 				<thead>
 					<tr>
@@ -32,7 +30,6 @@
 						<th>Address</th>
 						<th>Phone #</th>
 						<th>Date Created</th>
-						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,9 +46,6 @@
 							<td><?php echo $row['address'] ?></td>
 							<td><?php echo $row['phone_no'] ?></td>
 							<td><?php echo $row['date_created'] ?></td>
-							<td class="text-center">
-								<button class="btn btn-danger btn-sm delete-user" data-id="<?php echo $row['id'] ?>">Delete</button>
-							</td>
 						</tr>
 					<?php endwhile; ?>
 				</tbody>
@@ -63,24 +57,5 @@
 	$(document).ready(function(){
 		$('.table th, .table td').addClass("py-1 px-1 align-middle");
 		$('.table').dataTable();
-		
-		$('.delete-user').click(function(){
-			var id = $(this).attr('data-id');
-			if(confirm("Are you sure you want to delete this user?")) {
-				$.ajax({
-					url: 'delete_user.php',
-					method: 'POST',
-					data: { id: id },
-					success: function(response) {
-						if(response == 1) {
-							alert_toast("User successfully deleted",'success');
-							location.reload();
-						} else {
-							alert_toast("An error occurred while deleting the user",'danger');
-						}
-					}
-				});
-			}
-		});
 	})
 </script>
