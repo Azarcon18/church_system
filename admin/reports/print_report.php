@@ -1,292 +1,203 @@
-<?php if($_settings->chk_flashdata('success')): ?>
-    <?php
-// Set the content type to HTML
-header('Content-Type: text/html; charset=utf-8');
-
-// Optionally, set the content-disposition to attachment to force a download (remove if not needed)
-// header('Content-Disposition: attachment; filename="report.pdf"');
-
-// Include your config file and set the timezone
+<?php
+// Include necessary database connection and other required files
 require_once('../config.php');
-date_default_timezone_set('Asia/Manila');
-$currentDate = date('D M, Y');
 
-// Prepare the HTML content
-?>
-<script>
-	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
-</script>
-<?php endif;?>
+$debug = false; // Set to true when you need to debug
 
-<style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .item-row {
-            margin-bottom: 10px;
-        }
-        .item-row input {
-            width: calc(33.33% - 10px);
-            display: inline-block;
-        }
-    </style>
-<div class="container">
-	
-<header style="text-align: center; margin-bottom: 20px;">
-        <img src="../uploads/logo.jpg"style="display: flex; margin: auto; width: 50px; height: 50px; border-radius: 100%;">
-        <h3>Church Management System</h3>
-        <p>Poblacion, Madridejos, Cebu Philippines</p>
-        <p>Report Date: <span id="date"></span></p>
-    </header>
+// Enable error reporting for debugging
+if ($debug) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
 
-<div class="container-fluid">
-<?php 
-require_once('../config.php'); // Assuming config.php is already included
-date_default_timezone_set('Asia/Manila'); // Adjust the timezone as needed
-$startOfMonth = date('Y-m-01');
-$endOfMonth = date('Y-m-t');
+// Check database connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-$i = 1;
-$qry = $conn->query("SELECT r.*, t.sched_type 
-                     FROM `appointment_request` r 
-                     INNER JOIN `schedule_type` t ON r.sched_type_id = t.id 
-                     WHERE DATE(r.schedule) BETWEEN '$startOfMonth' AND '$endOfMonth' 
-                     ORDER BY FIELD(r.status, 0, 1, 2) ASC, unix_timestamp(r.`date_created`) ASC");
-?>
+// Get the appointment ID from the URL
+$id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
-    <center><h1 style="font-size: 30px;">Baptismal Form</h1></center>
-    <form action="/submit-invoice" method="post">
-        <div class="form-group">
-            <label for="invoice-date">Schedule Type:</label>
-            <input type="text" id="invoice-date" name="invoice_date" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="invoice-date">Date Created:</label>
-            <input type="date" id="invoice-date" name="invoice_date" required>
-        </div>
-        <div class="form-group">
-            <label for="invoice-date">Schedule Date:</label>
-            <input type="date" id="invoice-date" name="invoice_date" required>
-        </div>
-        <div class="form-group">
-            <label for="invoice-date">Fullname:</label>
-            <input type="text" id="invoice-date" name="invoice_date" required>
-        </div>
-        <div class="form-group">
-            <label for="invoice-date">Remarks:</label>
-            <input type="text" id="invoice-date" name="invoice_date" required>
-        </div>
-        <div class="form-group">
-            <label for="invoice-date">Status:</label>
-            <input type="text" id="invoice-date" name="invoice_date" required>
-        </div>
+if ($debug) {
+    echo "Debug: Received ID = " . $id . "<br>";
+}
+
+if ($id) {
+    // Fetch the specific appointment data
+    $query = "SELECT ar.*, st.sched_type 
+              FROM appointment_request ar 
+              LEFT JOIN schedule_type st ON ar.sched_type_id = st.id 
+              WHERE ar.id = ?";
     
-    </form>
+    if ($debug) {
+        echo "Debug: Query = " . $query . "<br>";
+    }
 
-<div class="container-fluid">
-    <table class="table table-bordered table-hover table-striped text-sm">
-        <colgroup>
-            <col width="5%">
-            <col width="20%">
-            <col width="10%">
-            <col width="30%">
-            <col width="25%">
-            <col width="10%">
-        </colgroup>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Schedule Type</th>
-                <th>Date Created</th>
-                <th>Schedule Date</th>
-                <th>Full Name</th>
-                <th>Remarks</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            while($row = $qry->fetch_assoc()):
-            ?>
-                <tr>
-                    <td class="text-center"><?php echo $i++; ?></td>
-                    <td><?php echo $row['sched_type'] ?></td>
-                    <td><?php echo date("M d, Y", strtotime($row['date_created'])) ?></td>
-                    <td><?php echo date("M d, Y", strtotime($row['schedule'])) ?></td>
-                    <td>
-                        <?php echo $row['fullname'] ?><br>
-                        <small><?php echo $row['contact'] ?></small><br>
-                        <small class="truncate" title="<?php echo $row['address'] ?>"><?php echo $row['address'] ?></small>
-                    </td>
-                    <td>
-                        <p class="m-0 truncate"><?php echo $row['remarks'] ?></p>
-                    </td>
-                    <td class="text-center">
-                        <?php if($row['status'] == 1): ?>
-                            <span class="badge badge-success">Confirmed</span>
-                        <?php elseif($row['status'] == 2): ?>
-                            <span class="badge badge-danger">Cancelled</span>
-                        <?php else: ?>
-                            <span class="badge badge-primary">Pending</span>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-</div>
+    $stmt = $conn->prepare($query);
+    
+    if ($stmt === false) {
+        die("Preparation failed: " . $conn->error);
+    }
 
-        </div>
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $appointment = $result->fetch_assoc();
 
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
- crossorigin="anonymous"></script>
- 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    var currentDate = new Date();
-    var options = { year: 'numeric', month: 'long', day: 'numeric' };
-    var formattedDate = currentDate.toLocaleDateString('en-US', options);
-    document.getElementById('date').innerText = formattedDate;
-});
-
-</script>
-<script>
-        window.onload = function() {
-      
-        setTimeout(() => {
-            window.print();
-        }, 2000); // Adjust the timeout as necessary to ensure charts are fully rendered
-    };
-function fetchPieChartData() {
-    fetch('get_piechart.php')
-    .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                const labels = data.data.map(item => item.label);
-                const series = data.data.map(item => item.total);
-
-                const pie_chart_options = {
-                    series: series,
-                    chart: {
-                        type: "donut",
-                    },
-                    labels: labels,
-                    dataLabels: {
-                        enabled: false,
-                    },
-                    colors: [
-                        "#0d6efd",
-                        "#20c997",
-                        "#ffc107",
-                        "#d63384",
-                        "#6f42c1",
-                        "#adb5bd",
-                    ],
-                };
-
-                const pie_chart = new ApexCharts(
-                    document.querySelector("#pie-chart"),
-                    pie_chart_options,
-                );
-                pie_chart.render();
-            } else {
-                console.error('Error fetching pie chart data:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching pie chart data:', error);
-        });
-}
-
-fetchPieChartData();
-
-    // Existing code to render the line chart
-
-    function fetchMonthlyAppointments() {
-    fetch('fetch_data.php') // Adjust the path to your PHP script
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                // Prepare data for ApexCharts
-                const dates = [];
-                const totals = [];
-                const currentDate = new Date();
-                const month = currentDate.toLocaleString('default', { month: 'long' });
-                const year = currentDate.getFullYear();
-                const daysInMonth = new Date(year, currentDate.getMonth() + 1, 0).getDate();
-
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dateStr = `${year}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                    const appointment = data.data.find(a => a.date === dateStr);
-                    dates.push(day);
-                    totals.push(appointment ? appointment.total : 0);
+    if ($appointment) {
+        // Display the appointment data using the modified template
+        ?>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Appointment Report</title>
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #f8f8f8;
                 }
+                .certificate {
+                    width: 210mm;
+                    height: 297mm;
+                    padding: 40px;
+                    margin: 0 auto;
+                    background-color: white;
+                    border: 1px solid #ccc;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                header {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                header h1 {
+                    margin: 0;
+                    font-size: 28px;
+                    color: #333;
+                }
+                header p {
+                    margin: 5px 0;
+                    font-size: 18px;
+                    color: #666;
+                }
+                .details {
+                    margin-bottom: 20px;
+                }
+                .details table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                .details td {
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    vertical-align: top;
+                }
+                .details td:first-child {
+                    font-weight: bold;
+                    width: 40%;
+                }
+                .signatures {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 30px;
+                }
+                .signature {
+                    text-align: center;
+                    width: 45%;
+                }
+                .signature p {
+                    margin: 5px 0;
+                    font-size: 16px;
+                    color: #333;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="certificate">
+                <header>
+                    <h1>Appointment Report</h1>
+                    <p>Appointment Details</p>
+                </header>
+                
+                <section class="details">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><strong>Appointment ID:</strong></td>
+                                <td><?php echo htmlspecialchars($appointment['id']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Schedule Type:</strong></td>
+                                <td><?php echo htmlspecialchars($appointment['sched_type']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Full Name:</strong></td>
+                                <td><?php echo htmlspecialchars($appointment['fullname']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contact:</strong></td>
+                                <td><?php echo htmlspecialchars($appointment['contact']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Address:</strong></td>
+                                <td><?php echo htmlspecialchars($appointment['address']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Schedule:</strong></td>
+                                <td><?php echo date("M d, Y h:i A", strtotime($appointment['schedule'])); ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Remarks:</strong></td>
+                                <td><?php echo htmlspecialchars($appointment['remarks']); ?></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status:</strong></td>
+                                <td>
+                                    <?php
+                                    if ($appointment['status'] == 1) echo "Confirmed";
+                                    elseif ($appointment['status'] == 2) echo "Cancelled";
+                                    else echo "Pending";
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date Created:</strong></td>
+                                <td><?php echo date("M d, Y h:i A", strtotime($appointment['date_created'])); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-                // Initialize ApexCharts
-                const options = {
-                    series: [{
-                        name: 'Appointment Requests',
-                        data: totals
-                    }],
-                    chart: {
-                        type: 'line',
-                        height: 400
-                    },
-                    xaxis: {
-                        categories: dates,
-                        title: {
-                            text: 'Day of the Month'
-                        }
-                    },
-                    yaxis: {
-                        title: {
-                            text: 'No. of Appointment Requests'
-                        }
-                    },
-                    title: {
-                        text: `Appointment Requests for ${month} ${year}`,
-                        align: 'center'
-                    }
-                };
+                <section class="signatures">
+                    <div class="signature">
+                        <p>_________________________</p>
+                        <p>Signature of Applicant</p>
+                        <p>Date: ___________</p>
+                    </div>
+                    <div class="signature">
+                        <p>_________________________</p>
+                        <p>Signature of Approver</p>
+                        <p>Date: ___________</p>
+                    </div>
+                </section>
+            </div>
 
-                const chart = new ApexCharts(document.querySelector("#monthly-appointments-chart"), options);
-                chart.render();
-            } else {
-                console.error('Error fetching monthly appointments:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching monthly appointments:', error);
-        });
+            <script>
+                // Automatically print the page when it loads
+                window.onload = function() {
+                    window.print();
+                }
+            </script>
+        </body>
+        </html>
+        <?php
+    } else {
+        echo "Appointment not found.";
+    }
+} else {
+    echo "Invalid request. No ID provided.";
 }
-
-// Fetch the monthly appointments data when the page loads
-document.addEventListener('DOMContentLoaded', fetchMonthlyAppointments);
-</script>
-
-
+?>

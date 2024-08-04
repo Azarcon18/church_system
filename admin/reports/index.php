@@ -123,7 +123,9 @@ $qry = $conn->query("SELECT r.*, t.sched_type
                         <?php endif; ?>
                     </td>
                     <td><div class="card-tools">
-			<a href="?page=reports/print_report" class="btn btn-flat btn-primary"><span class="fas fa-print"></span> Print Report</a>
+                    <a href="?page=reports/print_report&id=<?php echo $row['id']; ?>" class="btn btn-flat btn-primary" target="_blank">
+            <span class="fas fa-print"></span> Print Report
+        </a>
 		</div></td>
                 </tr>
             <?php endwhile; ?>
