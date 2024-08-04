@@ -17,12 +17,13 @@ $currentDate = date('D M, Y');
 	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
 </script>
 <?php endif;?>
+
 <style>
     @media print {
         body {
             width: 100%;
            
-            margin: 0;
+            margin: 3 cm;
             padding: 0;
             font-size: 12px;
             color: #000;
@@ -73,111 +74,122 @@ $currentDate = date('D M, Y');
         }
     }
 </style>
-
-<div class="container-fluid">
-
-    <header style="text-align: center; margin-bottom: 20px;">
-        <img src="../uploads/immaculte.jpg"style="display: flex; margin: auto; width: 50px; height: 50px; border-radius: 100%;">
-        <h1>Church Management System</h1>
+<div class="container">
+	
+<header style="text-align: center; margin-bottom: 20px;">
+        <img src="../uploads/logo.jpg"style="display: flex; margin: auto; width: 50px; height: 50px; border-radius: 100%;">
+        <h3>Church Management System</h3>
         <p>Poblacion, Madridejos, Cebu Philippines</p>
         <p>Report Date: <span id="date"></span></p>
     </header>
+	<div class="card-body">
+		
+      
 
-    <div class="card card-outline card-primary">
-        <div class="card-body">
-            <div class="row mt">
-                <div class="col-sm-12">
-                    <div class="card bg-light " style="">
-                        <div class="card-header">
-                            <h3 class="card-title">Total Appointment Requests by Type</h3>
-                        </div>
-                        <div class="card-body">
+
+<div class="row mt">
+          <div class="col-md-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Total Appointment Requests by Type</h3>
+                      
+                    </div> <!-- /.card-header -->
+                        <div class="card-body"> <!--begin::Row-->
+                            <div class="row">
+                                <div class="col-12" >
                             <div id="pie-chart"></div>
-                        </div>
-                    </div>
+                        </div> <!-- /.col -->
+                    </div> <!--end::Row-->
                 </div>
-                <div class="col-sm-12 mt-5">
-                    <div class="card bg-light">
-                        <div class="card-header">
-                            <h3 class="card-title">Daily Appointment Requests</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="position-relative mb-4">
-                                <div id="monthly-appointments-chart"></div>
+            </div>
+       
+                <div class="col-md-10">
+                            <div class="card-header">
+                                <h3 class="card-title">Daily Appointment Requests</h3> 
                             </div>
+                            <div class="card-body">
+                                <div class="position-relative">
+                            <div id="monthly-appointments-chart"></div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    
+                </div> 
+          
 
+</div>
+<div class="container-fluid">
+<?php 
+require_once('../config.php'); // Assuming config.php is already included
+date_default_timezone_set('Asia/Manila'); // Adjust the timezone as needed
+$startOfMonth = date('Y-m-01');
+$endOfMonth = date('Y-m-t');
+
+$i = 1;
+$qry = $conn->query("SELECT r.*, t.sched_type 
+                     FROM `appointment_request` r 
+                     INNER JOIN `schedule_type` t ON r.sched_type_id = t.id 
+                     WHERE DATE(r.schedule) BETWEEN '$startOfMonth' AND '$endOfMonth' 
+                     ORDER BY FIELD(r.status, 0, 1, 2) ASC, unix_timestamp(r.`date_created`) ASC");
+?>
+
+<div class="container-fluid">
+    <table class="table table-bordered table-hover table-striped text-sm">
+        <colgroup>
+            <col width="5%">
+            <col width="20%">
+            <col width="10%">
+            <col width="30%">
+            <col width="25%">
+            <col width="10%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Schedule Type</th>
+                <th>Date Created</th>
+                <th>Schedule Date</th>
+                <th>Full Name</th>
+                <th>Remarks</th>
+                <th>Status</th>
+
+            </tr>
+        </thead>
+        <tbody>
             <?php 
-            $startOfMonth = date('Y-m-01');
-            $endOfMonth = date('Y-m-t');
-
-            $qry = $conn->query("SELECT r.*, t.sched_type 
-                                 FROM `appointment_request` r 
-                                 INNER JOIN `schedule_type` t ON r.sched_type_id = t.id 
-                                 WHERE DATE(r.schedule) BETWEEN '$startOfMonth' AND '$endOfMonth' 
-                                 ORDER BY FIELD(r.status, 0, 1, 2) ASC, unix_timestamp(r.`date_created`) ASC");
+            while($row = $qry->fetch_assoc()):
             ?>
-
-            <div class="container-fluid">
-                <table class="table table-sm table-bordered table-hover table-striped text-sm">
-                    <colgroup>
-                        <col width="5%">
-                        <col width="20%">
-                        <col width="10%">
-                        <col width="30%">
-                        <col width="25%">
-                        <col width="10%">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Schedule Type</th>
-                            <th>Date Created</th>
-                            <th>Schedule Date</th>
-                            <th>Full Name</th>
-                            <th>Remarks</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        $i = 1;
-                        while($row = $qry->fetch_assoc()):
-                        ?>
-                            <tr>
-                                <td class="text-center"><?php echo $i++; ?></td>
-                                <td><?php echo $row['sched_type'] ?></td>
-                                <td><?php echo date("M d, Y", strtotime($row['date_created'])) ?></td>
-                                <td><?php echo date("M d, Y", strtotime($row['schedule'])) ?></td>
-                                <td>
-                                    <?php echo $row['fullname'] ?><br>
-                                    <small><?php echo $row['contact'] ?></small><br>
-                                    <small class="truncate" title="<?php echo $row['address'] ?>"><?php echo $row['address'] ?></small>
-                                </td>
-                                <td>
-                                    <p class="m-0 truncate"><?php echo $row['remarks'] ?></p>
-                                </td>
-                                <td class="text-center">
-                                    <?php if($row['status'] == 1): ?>
-                                        <span class="badge badge-success">Confirmed</span>
-                                    <?php elseif($row['status'] == 2): ?>
-                                        <span class="badge badge-danger">Cancelled</span>
-                                    <?php else: ?>
-                                        <span class="badge badge-primary">Pending</span>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+                <tr>
+                    <td class="text-center"><?php echo $i++; ?></td>
+                    <td><?php echo $row['sched_type'] ?></td>
+                    <td><?php echo date("M d, Y", strtotime($row['date_created'])) ?></td>
+                    <td><?php echo date("M d, Y", strtotime($row['schedule'])) ?></td>
+                    <td>
+                        <?php echo $row['fullname'] ?><br>
+                        <small><?php echo $row['contact'] ?></small><br>
+                        <small class="truncate" title="<?php echo $row['address'] ?>"><?php echo $row['address'] ?></small>
+                    </td>
+                    <td>
+                        <p class="m-0 truncate"><?php echo $row['remarks'] ?></p>
+                    </td>
+                    <td class="text-center">
+                        <?php if($row['status'] == 1): ?>
+                            <span class="badge badge-success">Confirmed</span>
+                        <?php elseif($row['status'] == 2): ?>
+                            <span class="badge badge-danger">Cancelled</span>
+                        <?php else: ?>
+                            <span class="badge badge-primary">Pending</span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
 </div>
 
+        </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
+ crossorigin="anonymous"></script>
+ 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     var currentDate = new Date();

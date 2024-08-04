@@ -20,9 +20,6 @@ $currentDate = date('D M, Y');
 <div class="card card-outline card-primary">
 	<div class="card-header">
 		
-		<div class="card-tools">
-			<a href="?page=reports/print_report" class="btn btn-flat btn-primary"><span class="fas fa-print"></span> Print Report</a>
-		</div>
 	</div>
 	<div class="card-body">
 		
@@ -96,6 +93,7 @@ $qry = $conn->query("SELECT r.*, t.sched_type
                 <th>Full Name</th>
                 <th>Remarks</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -124,6 +122,9 @@ $qry = $conn->query("SELECT r.*, t.sched_type
                             <span class="badge badge-primary">Pending</span>
                         <?php endif; ?>
                     </td>
+                    <td><div class="card-tools">
+			<a href="?page=reports/print_report" class="btn btn-flat btn-primary"><span class="fas fa-print"></span> Print Report</a>
+		</div></td>
                 </tr>
             <?php endwhile; ?>
         </tbody>

@@ -19,61 +19,30 @@ $currentDate = date('D M, Y');
 <?php endif;?>
 
 <style>
-    @media print {
         body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea {
             width: 100%;
-           
-            margin: 3 cm;
-            padding: 0;
-            font-size: 12px;
-            color: #000;
-            background: #fff;
+            padding: 8px;
+            box-sizing: border-box;
         }
-        .container-fluid {
-            width: 100%;
-            margin: 0;
-            padding: 0;
+        .item-row {
+            margin-bottom: 10px;
         }
-        .card {
-            border: 1px solid #000;
-            margin: 0;
-            padding: 0;
-            page-break-inside: avoid;
+        .item-row input {
+            width: calc(33.33% - 10px);
+            display: inline-block;
         }
-        .card-header {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            text-align: center;
-            padding: 5px;
-            border-bottom: 1px solid #000;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 10px 0;
-        }
-        table th, table td {
-            border: 1px solid #000;
-        }
-        table th {
-            background-color: #f8f9fa;
-        }
-        @page {
-            margin: 0;
-        }
-        @page {
-            size: auto; 
-            margin: 0mm; 
-        }
-    }
-    @media screen {
-        .container-fluid {
-            margin: 0;
-            padding: 0;
-        }
-    }
-</style>
+    </style>
 <div class="container">
 	
 <header style="text-align: center; margin-bottom: 20px;">
@@ -82,39 +51,7 @@ $currentDate = date('D M, Y');
         <p>Poblacion, Madridejos, Cebu Philippines</p>
         <p>Report Date: <span id="date"></span></p>
     </header>
-	<div class="card-body">
-		
-      
 
-
-<div class="row mt">
-          <div class="col-md-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Total Appointment Requests by Type</h3>
-                      
-                    </div> <!-- /.card-header -->
-                        <div class="card-body"> <!--begin::Row-->
-                            <div class="row">
-                                <div class="col-12" >
-                            <div id="pie-chart"></div>
-                        </div> <!-- /.col -->
-                    </div> <!--end::Row-->
-                </div>
-            </div>
-       
-                <div class="col-md-10">
-                            <div class="card-header">
-                                <h3 class="card-title">Daily Appointment Requests</h3> 
-                            </div>
-                            <div class="card-body">
-                                <div class="position-relative">
-                            <div id="monthly-appointments-chart"></div>
-                        </div>
-                    
-                </div> 
-          
-
-</div>
 <div class="container-fluid">
 <?php 
 require_once('../config.php'); // Assuming config.php is already included
@@ -129,6 +66,36 @@ $qry = $conn->query("SELECT r.*, t.sched_type
                      WHERE DATE(r.schedule) BETWEEN '$startOfMonth' AND '$endOfMonth' 
                      ORDER BY FIELD(r.status, 0, 1, 2) ASC, unix_timestamp(r.`date_created`) ASC");
 ?>
+
+    <center><h1 style="font-size: 30px;">Baptismal Form</h1></center>
+    <form action="/submit-invoice" method="post">
+        <div class="form-group">
+            <label for="invoice-date">Schedule Type:</label>
+            <input type="text" id="invoice-date" name="invoice_date" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="invoice-date">Date Created:</label>
+            <input type="date" id="invoice-date" name="invoice_date" required>
+        </div>
+        <div class="form-group">
+            <label for="invoice-date">Schedule Date:</label>
+            <input type="date" id="invoice-date" name="invoice_date" required>
+        </div>
+        <div class="form-group">
+            <label for="invoice-date">Fullname:</label>
+            <input type="text" id="invoice-date" name="invoice_date" required>
+        </div>
+        <div class="form-group">
+            <label for="invoice-date">Remarks:</label>
+            <input type="text" id="invoice-date" name="invoice_date" required>
+        </div>
+        <div class="form-group">
+            <label for="invoice-date">Status:</label>
+            <input type="text" id="invoice-date" name="invoice_date" required>
+        </div>
+    
+    </form>
 
 <div class="container-fluid">
     <table class="table table-bordered table-hover table-striped text-sm">
