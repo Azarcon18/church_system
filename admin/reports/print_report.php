@@ -118,8 +118,8 @@ if ($id) {
         <body>
             <div class="certificate">
                 <header>
-                    <h1>Appointment Report</h1>
-                    <p>Appointment Details</p>
+                    <h1>Death of Certificate</h1>
+                    <p>Death Details</p>
                 </header>
                 
                 <section class="details">
