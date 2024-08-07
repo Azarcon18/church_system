@@ -52,123 +52,75 @@ if ($id) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Appointment Report</title>
+            <title>Death Certificate</title>
             <style>
                 body {
+                    font-family: Arial, sans-serif;
                     margin: 0;
                     padding: 0;
-                    font-family: Arial, sans-serif;
-                    background-color: #f8f8f8;
+                    background-color: #f0f0f0;
                 }
                 .certificate {
                     width: 210mm;
                     height: 297mm;
-                    padding: 40px;
                     margin: 0 auto;
                     background-color: white;
-                    border: 1px solid #ccc;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    padding: 20mm;
+                    box-sizing: border-box;
                 }
                 header {
                     text-align: center;
-                    margin-bottom: 20px;
+                    margin-bottom: 10mm;
                 }
-                header h1 {
-                    margin: 0;
-                    font-size: 28px;
+                h1 {
+                    font-size: 24pt;
                     color: #333;
-                }
-                header p {
-                    margin: 5px 0;
-                    font-size: 18px;
-                    color: #666;
+                    margin: 0;
                 }
                 .details {
-                    margin-bottom: 20px;
-                }
-                .details table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-                .details td {
-                    padding: 8px;
-                    border: 1px solid #ccc;
-                    vertical-align: top;
-                }
-                .details td:first-child {
-                    font-weight: bold;
-                    width: 40%;
+                    font-size: 14pt;
+                    line-height: 3;
+                    text-align: justify;
                 }
                 .signatures {
                     display: flex;
                     justify-content: space-between;
-                    margin-top: 30px;
+                    margin-top: 20mm;
                 }
                 .signature {
                     text-align: center;
-                    width: 45%;
                 }
-                .signature p {
-                    margin: 5px 0;
-                    font-size: 16px;
-                    color: #333;
+                @media print {
+                    body {
+                        background-color: white;
+                    }
+                    .certificate {
+                        box-shadow: none;
+                    }
                 }
             </style>
         </head>
         <body>
             <div class="certificate">
                 <header>
-                    <h1>Death of Certificate</h1>
-                    <p>Death Details</p>
+                    <h1><b>DEATH CERTIFICATE</b></h1>
                 </header>
                 
                 <section class="details">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><strong>Appointment ID:</strong></td>
-                                <td><?php echo htmlspecialchars($appointment['id']); ?></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Schedule Type:</strong></td>
-                                <td><?php echo htmlspecialchars($appointment['sched_type']); ?></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Full Name:</strong></td>
-                                <td><?php echo htmlspecialchars($appointment['fullname']); ?></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Contact:</strong></td>
-                                <td><?php echo htmlspecialchars($appointment['contact']); ?></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Address:</strong></td>
-                                <td><?php echo htmlspecialchars($appointment['address']); ?></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Schedule:</strong></td>
-                                <td><?php echo date("M d, Y h:i A", strtotime($appointment['schedule'])); ?></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Remarks:</strong></td>
-                                <td><?php echo htmlspecialchars($appointment['remarks']); ?></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Status:</strong></td>
-                                <td>
-                                    <?php
-                                    if ($appointment['status'] == 1) echo "Confirmed";
-                                    elseif ($appointment['status'] == 2) echo "Cancelled";
-                                    else echo "Pending";
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Date Created:</strong></td>
-                                <td><?php echo date("M d, Y h:i A", strtotime($appointment['date_created'])); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <p>TO WHOM IT MAY CONCERN:</p>
+                    
+                    <p>This is to clarify that <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['death_fullname']); ?></span>, <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['gender']); ?></span> died last <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['date_of_death']); ?></span>. Born on <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['birthdate']); ?></span>, died at <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['resident']); ?></span>. <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['civil_status']); ?></span>, resident of <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['resident']); ?></span>, <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['nationality']); ?></span>. Entrepreneur of parents <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['mother']); ?></span> and <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['father']); ?></span>, <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['nationality']); ?></span>. <br> This certification is issued to <span style="text-decoration:underline;"><?php echo htmlspecialchars($appointment['fullname']); ?></span> upon his/her request for whatever legal purpose it may serve.</p>
+                    <?php
+    // Set the timezone to Cebu, Philippines
+    date_default_timezone_set('Asia/Manila');
+
+    // Get the current date
+    $current_date = date('F j, Y');
+
+    // Output the date within the paragraph
+    echo "<p>Given this of $current_date at Immaculate Conception Parish, Poblacion Madridejos Cebu, Burgos St.</p>";
+?>
+
                 </section>
 
                 <section class="signatures">
