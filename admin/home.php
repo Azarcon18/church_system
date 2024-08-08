@@ -20,6 +20,27 @@
             <!-- /.info-box -->
           </div>
 
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box bg-color">
+              <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user-plus"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Death Certificate</span>
+                <span class="info-box-number text-right">
+                <?php 
+    $appointment = $conn->query("SELECT count(id) as total FROM appointment_request WHERE status = 1")->fetch_assoc()['total'];
+    echo number_format($appointment);
+?>
+
+                  <?php ?>
+                  <?php ?>
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+
 
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
@@ -155,6 +176,8 @@
               </div>
               <!-- /.info-box-content -->
             </div>
+
+            
             <!-- /.info-box -->
           </div>
 
