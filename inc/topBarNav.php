@@ -1,9 +1,20 @@
 <style>
-  /* Existing styles */
   .navbar {
+    position: relative;
+    background-color: white; /* Set the background color of the navbar to white */
+  }
+
+  .navbar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(90deg, #ff7f50, #1e90ff, #32cd32); /* Coral, DodgerBlue, LimeGreen */
     background-size: 600% 600%;
     animation: gradientBackground 10s ease infinite;
+    z-index: -1;
   }
 
   @keyframes gradientBackground {
@@ -13,13 +24,13 @@
   }
 
   .navbar-nav .nav-item .nav-link {
-    color: white; 
+    color: black; 
   }
 
   .navbar-nav .nav-item .nav-link:hover, 
   .navbar-nav .nav-item .nav-link:active {
     background-color: rgba(0, 0, 0, 0.1); /* Slight dark overlay on hover */
-    color: white;
+    color: black;
   }
 
   .dropdown-menu {
@@ -31,7 +42,7 @@
   }
 
   .dropdown-menu .dropdown-item {
-    color: white; 
+    color: black; 
   }
 
   .dropdown-menu .dropdown-item:hover {
@@ -46,7 +57,7 @@
   }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-seconda">
     <div class="container px-4 px-lg-5">
         <button class="navbar-toggler btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -96,6 +107,7 @@
                 <button id="donation" class="btn btn-success btn-sm ms-3">Donate</button>
             </div>
         </div>
+                </form>
     </div>
 </nav>
 
