@@ -115,25 +115,25 @@
   $(function(){
     $('#login-btn').click(function(){
       uni_modal("Login","login.php")
-    });
+    })
     $('#donation').click(function(){
       uni_modal("Donate","donate.php")
-    });
+    })
     $('#navbarResponsive').on('show.bs.collapse', function () {
         $('#mainNav').addClass('navbar-shrink')
-    });
+    })
     $('#navbarResponsive').on('hidden.bs.collapse', function () {
         if($('body').offset().top === 0)
           $('#mainNav').removeClass('navbar-shrink')
-    });
+    })
 
     $('#search-form').submit(function(e){
       e.preventDefault();
       var sTxt = $('[name="search"]').val();
       if(sTxt !== '')
         location.href = './?p=search&search='+sTxt;
-    });
-  });
+    })
+  })
 
   function uni_modal(title, url) {
     // Your modal function implementation
