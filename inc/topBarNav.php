@@ -1,20 +1,9 @@
 <style>
+  /* Existing styles */
   .navbar {
-    position: relative;
-    background-color: white; /* Set the background color of the navbar to white */
-  }
-
-  .navbar::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: linear-gradient(90deg, #ff7f50, #1e90ff, #32cd32); /* Coral, DodgerBlue, LimeGreen */
     background-size: 600% 600%;
     animation: gradientBackground 10s ease infinite;
-    z-index: -1;
   }
 
   @keyframes gradientBackground {
@@ -24,13 +13,13 @@
   }
 
   .navbar-nav .nav-item .nav-link {
-    color: black; 
+    color: white; 
   }
 
   .navbar-nav .nav-item .nav-link:hover, 
   .navbar-nav .nav-item .nav-link:active {
     background-color: rgba(0, 0, 0, 0.1); /* Slight dark overlay on hover */
-    color: black;
+    color: white;
   }
 
   .dropdown-menu {
@@ -42,7 +31,7 @@
   }
 
   .dropdown-menu .dropdown-item {
-    color: black; 
+    color: white; 
   }
 
   .dropdown-menu .dropdown-item:hover {
@@ -57,7 +46,7 @@
   }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-seconda">
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container px-4 px-lg-5">
         <button class="navbar-toggler btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -104,33 +93,37 @@
                 <?php else: ?>
                     <a href="login.php" class="btn btn-primary btn-sm">Login</a>
                 <?php endif; ?>
+                <button id="donation" class="btn btn-success btn-sm ms-3">Donate</button>
             </div>
         </div>
-                </form>
     </div>
 </nav>
 
 <script>
   $(function(){
     $('#login-btn').click(function(){
-      uni_modal("","login.php")
-    })
+      uni_modal("Login","login.php")
+    });
+    $('#donation').click(function(){
+      uni_modal("Donate","donate.php")
+    });
     $('#navbarResponsive').on('show.bs.collapse', function () {
         $('#mainNav').addClass('navbar-shrink')
-    })
+    });
     $('#navbarResponsive').on('hidden.bs.collapse', function () {
-        if($('body').offset.top == 0)
+        if($('body').offset().top === 0)
           $('#mainNav').removeClass('navbar-shrink')
-    })
+    });
 
     $('#search-form').submit(function(e){
-      e.preventDefault()
-      var sTxt = $('[name="search"]').val()
-      if(sTxt != '')
+      e.preventDefault();
+      var sTxt = $('[name="search"]').val();
+      if(sTxt !== '')
         location.href = './?p=search&search='+sTxt;
-    })
-    $('#donation').click(function(){
-      uni_modal('Donation','donate.php')
-    })
-  })
+    });
+  });
+
+  function uni_modal(title, url) {
+    // Your modal function implementation
+  }
 </script>
