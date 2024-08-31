@@ -83,9 +83,72 @@
 
 </style>
 <body class="hold-transition login-page">
-  <script>
-    start_loader()
-  </script>
+<?php
+session_start();
+include 'db_connection.php'; // Include your database connection
+
+// Initialize error message
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Validate CSRF token
+    if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        
+        // Sanitize and validate input
+        $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+        $password = $_POST['password'];
+
+        // Prepare SQL statement to prevent SQL injection
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Check if the user exists and verify the password
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['password'])) {
+                // Password is correct, start a session
+                $_SESSION['user_id'] = $user['id'];
+                session_regenerate_id(true);
+                header("Location: dashboard.php");
+                exit;
+            } else {
+                $error = "Invalid login credentials.";
+            }
+        } else {
+            $error = "Invalid login credentials.";
+        }
+    } else {
+        $error = "CSRF token mismatch.";
+    }
+}
+
+// Generate CSRF token
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Include your stylesheets here -->
+</head>
+<body class="hold-transition login-page">
+    <script>
+        function start_loader() {
+            // Add your loader start logic here
+        }
+        
+        function end_loader() {
+            // Add your loader end logic here
+        }
+        
+        start_loader();
+    </script>
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
