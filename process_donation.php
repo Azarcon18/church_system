@@ -1,19 +1,29 @@
-<!-- process_donation.php -->
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $amount = $_POST['amount'];
-    $donor_name = $_POST['donor_name'];
-    $donor_email = $_POST['donor_email'];
+// Include the database connection
+include 'config.php';
 
-    // Here you would typically insert the donation information into a database
-    // and perhaps send a confirmation email to the donor.
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Sanitize and retrieve form data
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $amount = htmlspecialchars($_POST['amount']);
 
-    // Redirect to a thank-you page or echo a success message
-    echo "Thank you for your donation of $amount, $donor_name!";
-    // Optionally, you can return a JSON response for AJAX handling
-    // echo json_encode(['status' => 'success', 'message' => 'Thank you for your donation!']);
-} else {
-    // If someone tries to access this page directly, redirect them
-    header('Location: index.php');
+    // Prepare the SQL statement to insert donation data
+    $sql = "INSERT INTO donations (name, email, amount, date_created) VALUES ('$name', '$email', '$amount', NOW())";
+
+    // Execute the query and check if successful
+    if ($conn->query($sql) === TRUE) {
+        // Set a success message in the session
+        $_settings->set_flashdata('success', 'Donation completed successfully!');
+        
+        // Redirect to the index page to display the updated list
+        header("Location: index.php");
+        exit();
+    } else {
+        // Handle the error if the query fails
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
 }
+
+// No need to manually close the connection, the destructor will handle it
 ?>
