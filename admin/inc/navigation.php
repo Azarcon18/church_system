@@ -120,13 +120,19 @@
                   <p>Appointment Requests</p>
                 </a>
               </li>
-             </li>
+              </li>
              <li class="nav-item dropdown">
              <a href="<?php echo base_url ?>admin/?page=registered_users" class="nav-link nav-registered_users">
              <i class="nav-icon fas fa-user-plus"></i>
               <p>Registered Users</p>
               </a>
+              <li class="nav-item dropdown">
+              <a href="<?php echo base_url ?>admin/?page=donate" class="nav-link nav-donation">
+              <i class="nav-icon fas fa-hand-holding-heart"></i>
+              <p>Donation</p>
+             </a>
               </li>
+
               <li class="nav-header">Maintenance</li>
               <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=maintenance/topics" class="nav-link nav-topics">
@@ -153,6 +159,16 @@
         <p>Reports</p>
     </a>
 </li>
+</li>
+</li>
+              <li class="nav-item dropdown ">
+    <a href="<?php echo base_url ?>admin/?page=Certificate" class="nav-link nav-Certificate">
+        <i class="nav-icon fas fa-chart-line"></i>
+        <p>Certificate</p>
+    </a>
+</li>
+</li>
+
 
               </li>
               <li class="nav-item dropdown">

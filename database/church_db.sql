@@ -97,6 +97,19 @@ CREATE TABLE `daily_verses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Table structure for table `donations`
+--
+
+CREATE TABLE `donations` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `amount` decimal(10,2) NOT NULL,
+    `date_created` datetime NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Dumping data for table `daily_verses`
 --
 

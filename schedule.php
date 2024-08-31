@@ -40,8 +40,8 @@ $sub_title = "";
                     $row['description'] = strip_tags(stripslashes(html_entity_decode($row['description'])));
             ?>
             <div class="col mb-6 mb-2 text-light item">
-                <a href="javascript:void(0)" class="card sched-item text-decoration-none bg-gradient" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['sched_type'] ?>">
-                    <div class="card-body p-4 text-center">
+                <a href="javascript:void(0)" class="card sched-item text-decoration-none bg-gradient" data-id="<?php echo $row['id'] ?>"  data-name="<?php echo $row['sched_type'] ?>">
+                    <div class="card-body p-4">
                         <div class="">
                             <!-- Product name-->
                             <h5 class="fw-bolder border-bottom border-primary"><?php echo $row['sched_type'] ?></h5>
@@ -55,7 +55,12 @@ $sub_title = "";
         </div>
     </div>
 </section>
-
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p class="mb-0">&copy; <?php echo date("Y"); ?> Your Company Name. All rights reserved.</p>
+    </div>
+</footer>
 <script>
     $(function(){
         $('.sched-item').click(function(){
