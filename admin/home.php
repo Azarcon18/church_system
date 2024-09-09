@@ -29,16 +29,23 @@
             </div>
         </div>
         <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box bg-color">
-                <span class="info-box-icon bg-primary elevation-1 animate__animated animate__bounceIn">
-                    <i class="fas fa-donate"></i>
-                </span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Donations</span>
-                    <span class="info-box-number text-right">
-                        <?php 
-                            $donation = $conn->query("SELECT count(*) as total FROM donations ")->fetch_assoc()['total'];
-                            echo number_format($donation);
+    <div class="info-box bg-color">
+        <span class="info-box-icon bg-primary elevation-1 animate__animated animate__bounceIn">
+            <i class="fas fa-donate"></i>
+        </span>
+        <div class="info-box-content">
+            <span class="info-box-text">Total Donations</span>
+            <span class="info-box-number text-right">
+                <?php 
+                    // Query to count the total number of donations (donors)
+                    $donor_count = $conn->query("SELECT COUNT(*) as total_donors FROM donations")->fetch_assoc()['total_donors'];
+
+                    // Query to sum the total amount of donations
+                    $total_donation = $conn->query("SELECT SUM(amount) as total_amount FROM donations")->fetch_assoc()['total_amount'];
+                    $total_donation = $total_donation ? $total_donation : 0;  // Default to 0 if no donations
+
+                    // Display the donor count and the total donation amount
+                    echo "Amount: $" . number_format($total_donation, 2);
                         ?>
                     </span>
                 </div>
